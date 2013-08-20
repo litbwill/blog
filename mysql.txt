@@ -1,0 +1,22 @@
+CREATEDATABASE`blog` ;
+
+CREATE TABLE `blog`.`categories` (`id` TINYINT NOT NULL AUTO_INCREMENT COMMENT '类别ID', `cat` VARCHAR(20) NOT NULL, PRIMARY KEY (`id`)) ENGINE = MyISAM COMMENT = '类别';
+
+CREATE TABLE `blog`.`entries` (`id` INT NOT NULL AUTO_INCREMENT, `cat_id` TINYINT NOT NULL, `dateposted` DATETIME NOT NULL, `subject` VARCHAR(100) NOT NULL COMMENT '文章标题', `body` TEXT NOT NULL COMMENT '文章内容', PRIMARY KEY (`id`)) ENGINE = MyISAM COMMENT = '文章';
+
+CREATE TABLE `blog`.`comments` (`id` INT NOT NULL AUTO_INCREMENT, `blog_id` INT NOT NULL, `dateposted` DATETIME NOT NULL, `name` VARCHAR(50) NOT NULL COMMENT '评论标题', `comment` TEXT NOT NULL COMMENT '评论内容', PRIMARY KEY (`id`)) ENGINE = MyISAM COMMENT = '评论';
+
+CREATE TABLE `blog`.`logins` (`id` TINYINT NOT NULL AUTO_INCREMENT, `username` VARCHAR(10) NOT NULL, `password` VARCHAR(10) NOT NULL, PRIMARY KEY (`id`)) ENGINE = MyISAM COMMENT = '用户信息';
+
+ALTER TABLE `catetories` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`)
+
+ALTER TABLE `comments` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`)
+
+ALTER TABLE `entries` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`)
+
+ALTER TABLE `logins` DROP PRIMARY KEY, ADD PRIMARY KEY(`id`)
+
+INSERTINTO`blog`.`catetories` (`id` , `cat` ) VALUES ( '1','food');
+INSERTINTO`blog`.`catetories` ( `id` ,`cat` ) VALUES ( '2','news');
+
+

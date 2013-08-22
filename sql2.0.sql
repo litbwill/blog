@@ -63,4 +63,4 @@ insert into user_article_relation values(1,1,1,now()),(1,2,0,now()),(2,3,
 5,9,1,now()),(6,10,0,now()),(6,11,1,now()),(6,12,1,now()),(7,13,1,now()),(8,14,1
 ,now());
 
-insert into article_tag_relation values(1,1),values(2,1),values(3,1),values(4,1),values(5,1),values(6,1),values(7,2),values(8,2),values(9,2),values(10,2),values(11,2),values(12,3),values(13,4),values(14,5);
+insert into article_tag_relation values(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,2),(8,2),(9,2),(10,2),(11,2),(12,3),(13,4),(14,5);

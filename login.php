@@ -4,7 +4,7 @@
 	require "Conn/conn.php";
 	if($_POST['submit']=='Login')
 	{
-		$sql="select * from logins where username='".$_POST['username']."' and password='".$_POST['pwd']."' ";
+		$sql="select * from user where uname='".$_POST['username']."' and password='".$_POST['pwd']."' ";
 		$result=mysql_query($sql);
 		$numrows=mysql_num_rows($result);
 		if($numrows==1)
@@ -35,14 +35,21 @@
 <form action="" method="post">
 <table>
 	<tr>
-	<td>Username</td>
-    <td><input name="username" type="text" /></td>
+		<td>Username</td>
+	    <td><input name="username" type="text" /></td>
     </tr>
-    <td>Password</td>
-    <td><input name="pwd" type="password" /></td>
     <tr>
-    <td></td>
-    <td><input name="submit" type="submit" value="Login" /></td>
+	    <td>Password</td>
+	    <td><input name="pwd" type="password" /></td>
+    </tr>
+    <tr>
+	    <td></td>
+	    <td><input name="submit" type="submit" value="Login" /></td>
+    </tr>
+    <tr>
+      <td><a href='reg.php')>新用户？请先注册</a></td>
+    </tr>
+    
 </table>    
 </form>
 <?php	

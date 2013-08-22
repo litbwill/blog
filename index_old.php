@@ -4,35 +4,33 @@
 	require "header.php"; 
 	require "session.php";
 
-	$sql="select * from tag";
+	$sql="select * from categories";
 	$result=mysql_query($sql);
-	echo "<hr><b>分类：&nbsp;&nbsp</b>";
+	echo "<hr>";
 	while($cat=mysql_fetch_assoc($result))
 	{
-		echo "<a href='view_cat.php?tid=".$cat['tid']."'>".$cat['tname']."</a>&nbsp;&nbsp ";	
+		echo "<a href='view_cat.php?id=".$cat['id']."'>".$cat['cat']."</a>     ||    ";	
 	}
 	echo "<hr>";
 	
-	echo "<table bgcolor='#999' style='width:100%'>";
+	echo "<table bgcolor='#ABED8B' >";
 	echo "<tr>";
 	echo "<td>";
-	echo "最近更新<br/>";
-	$sql="select a.*, t.*, u.*, uar.reprint_time from article a, tag t, user u, article_tag_relation atr, user_article_relation uar 
-		where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid 
-		order by uar.reprint_time desc limit 8";
+	echo "<i> >>最近更新<< </i><br/>";
+	$sql="select entries.*,categories.cat from entries,categories where entries.cat_id=categories.id 
+order by entries.dateposted desc limit 8";
 	$result=mysql_query($sql);
 	echo "<table>";
 	while ($row=mysql_fetch_assoc($result))
 	{
 		echo "<tr>";
-		echo "<td><a href='view_entries.php?id=".$row['aid']."'>".$row['title']."</a><br/>属于分类：<a href='view_cat.php?id=".$row['tid']."'>".$row['tname']."</a>&nbsp;&nbsp;发布时间：".$row['reprint_time']."&nbsp;&nbsp;发布者".$row['uname']."</td>";	
-		//echo "<br/>";
-		//echo "<td></td>";		
+		echo "<td><a href='view_entries.php?id=".$row['id']."'>".$row['subject']."</a></td>";
+		echo "<td><i>In <a href='view_cat.php?id=".$row['cat_id']."'>".$row['cat']."</a> - Posted on ".$row['dateposted']."</i></td>";		
 		echo "</tr>";
 	}
 	echo "</table>";
 	echo "</td>";
-	/*echo "<td>";
+	echo "<td>";
 	$sql="SELECT*  FROM leavemessage order by dateposted desc";
 	$result=mysql_query($sql);
 	echo "<table border='1'>";
@@ -50,7 +48,7 @@
 		echo "</tr>";
 	}
 	echo "</table>";
-	echo "</td>";*/
+	echo "</td>";
 	echo "</table>";
 	
 	require "footer.php";

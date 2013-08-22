@@ -2,43 +2,53 @@
     ob_start();
 	require "Conn/config.php";
 	
-	if(isset($_GET['id'])==true)
+	if(isset($_GET['aid'])==true)
 	{
-		if(is_numeric($_GET['id'])==false)	
+		if(is_numeric($_GET['aid'])==false)	
 		{
 			$error=1;
 			header("Location:".$config_error."?error=".$error);
 		}
 		else
-			$entries_id=$_GET['id'];	
+			$entries_id=$_GET['aid'];	
 	}
 	else
-		$entries_id=0;
+		$entries_id=-1;
 ?>  
+<script type="text/javascript">
+	//doucument.getElementById(edit).style.display=none;
+	function check(){
+		if($_SESSION['USERNAME']== '<?php echo $row[uname];?>')
+		{
+			 alert('edit');
+		}
+	}
+</script>
 <?php
 	require "Conn/conn.php";
 	require "header.php";
 	require "session.php";
-	if($entries_id==0)
-		$sql="select entries.*,categories.cat from entries,categories where entries.cat_id=categories.id order by dateposted DESC limit 1;";	
+	if($entries_id==-1)
+		$sql="select a.*, t.*, u.*, uar.reprint_time from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid order by uar.reprint_time DESC limit 1;";	
 	else
-		$sql="select entries.*,categories.cat from entries,categories where entries.cat_id=categories.id and entries.id=".$entries_id." order by dateposted DESC limit 1;";	
+		$sql="select a.*, t.*, u.*, uar.reprint_time from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where  a.aid=".$entries_id." and a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid ;";	
 	$result=mysql_query($sql);
 	$row=mysql_fetch_assoc($result);
 	
-	$sql_1=mysql_query("select categories.* from categories,entries where categories.id=entries.cat_id and entries.id=".$entries_id."");
-	$row_1=mysql_fetch_assoc($sql_1);             //获取类别名称
-	$sql_2=mysql_query("select logins.*  from logins,entries where logins.id=entries.user and entries.id=".$entries_id."");
-	$row_2=mysql_fetch_assoc($sql_2);             //获取博文者名称
 	echo "<hr/>";
-	echo "<b>当前位置: ".$row_1['cat']."</b>---->".$row['subject']."<hr/>";
-	echo "<img  height='80px' width='80px'  src='images/face/".$row_2['face']."'>";
-	echo "用户: ".$row_2['username']."<br/>";
-	echo "Title :".$row['subject']."<br/>";
-	echo "内容: ".$row['body']."<br/>";
-	echo "<i>In <a href='view_cat.php?id=".$row['cat_id']."'>".$row['cat']."</a> - Posted on ".date("D jS F Y g.iA",strtotime($row['dateposted']))."</i><hr/><hr/>";
+	echo "<b>当前位置: ".$row['tname']."</b>---->".$row['title']."<hr/>";
+	echo "Title :".$row['title']."<br/>";
+	echo "内容: <br/>";
+	?>
+	<textarea id="content" rows="10" cols="50" readonly="readonly"><?php echo $row['content']?></textarea>
+	<br/>
+
+	<input id="edit" type="button" value="编辑" onclick="check()"/>
+	<input id="sub" type="button" disabled="true" value="提交" />
+	<?php
+	echo "<i>In <a href='view_cat.php?id=".$row['tid']."'>".$row['tname']."</a> - Posted on ".date("D jS F Y g.iA",strtotime($row['reprint_time']))."</i><hr/><hr/>";
 	
-	$sql_comment="select logins.*,comments.* from comments,logins  where logins.id=comments.user and comments.blog_id=".$row['id']." order by dateposted DESC;";
+	/*$sql_comment="select logins.*,comments.* from comments,logins  where logins.id=comments.user and comments.blog_id=".$row['id']." order by dateposted DESC;";
 	$result_comment=mysql_query($sql_comment);
 	$num_comment=mysql_num_rows($result_comment);
 	if($num_comment==0)
@@ -57,11 +67,11 @@
 			echo "<i>评论时间:".$comment['dateposted']."</i><br/>";
 			$i++;
 		}
-	}
+	}*/
 ?>
 
 <?php 
-	require "add_comment.php"; //添加评论 
+	//require "add_comment.php"; //添加评论 
 ?>
 <?php
 	require "footer.php";

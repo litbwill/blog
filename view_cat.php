@@ -1,41 +1,41 @@
 <?php
     ob_start();
-	require "Conn/config.php";
-	
-	if(isset($_GET['id'])==true)
-	{
-		if(is_numeric($_GET['id'])==false)	
-		{
-			$error=2;
-			header("Location:".$config_error."?error=".$error);
-		}
-		else
-			$cat_id=$_GET['id'];	
-	}
-	else
-		$cat_id=1;
-?>  
-<?php
-	require "Conn/conn.php";
+	require "Conn/conn.php"; 
 	require "header.php";
 	require "session.php";
-	$sql="select categories.cat from categories where id=".$cat_id."";
+
+	//显示分类名称
+	$sql="select * from tag where tid=".$_GET['tid'];//需要改的接口
 	$result=mysql_query($sql);
-	$result=mysql_fetch_assoc($result);
-	echo "<hr/><b>当前位置: ".$result['cat']."</b><hr>";
-	$sql="select * from entries  where cat_id=".$cat_id." order by dateposted DESC";	
-	$result=mysql_query($sql);
-	$num_row_entries=mysql_num_rows($result);
-	echo "该类别共有 ".$num_row_entries."  个博客:";
-	echo "<ul>";
-	if($num_row_entries==0)
-		echo "<li>No entries!</li>";
-	else
+	echo "<hr>";
+	while($cat=mysql_fetch_assoc($result))
 	{
-		while($entries_row=mysql_fetch_assoc($result))
-		{
-			echo "<li><a href='view_entries.php?id=".$entries_row['id']."'>".$entries_row['subject']."</a>   <i>时间:".$entries_row['dateposted']."</i></li> ";
-		}	
+		echo $cat['tname'].'>>';
 	}
+	echo "<hr>";
+	
+	echo "<table bgcolor='#FFED8B' >";
+	echo "<tr>";	
+	echo "<td>";
+	echo "<br/>";
+	
+	//显示标题，作者，时间
+	$sql="select a.*, t.*, u.*, uar.reprint_time, uar.reprinted from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid and t.tid=".$_GET['tid'];
+	//需要改的接口
+	$result=mysql_query($sql);
+	echo "<table>";
+	while ($row=mysql_fetch_assoc($result))
+	{
+		echo "<tr>";
+		echo "<td><a href='view_entries.php?id=".$row['aid']."'>".$row['title']."</a></td>";//需要修改的地方
+		echo "<td>".'author:'.$row['uname']."</td> ";
+		echo "<td>".'----'.$row['create_time']."</td>";		
+		echo "</tr>";
+	}
+	echo "</table>";
+	echo "</td>";		
+	
+	echo "</table>";
+	echo "<br/>";
 	require "footer.php";
 ?>

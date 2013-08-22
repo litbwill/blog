@@ -21,6 +21,9 @@
 		case 6:
 			echo "<meta http-equiv=refresh content='1;url=index.php'>";	
 			break;
+		case 7:
+			echo "<meta http-equiv=refresh content='1;url=index.php'>";	
+			break;
 	}
 	
 ?>
@@ -52,6 +55,10 @@
 			break;
 		case 6:
 			echo "[感谢您的留言！]<br/>";
+			echo "<a href='index.php')>
+				[如果您的浏览器没有自动跳转,请点击这里 ]</a><br />";
+		case 7:
+		    echo "[感谢您的注册！]<br/>";
 			echo "<a href='index.php')>
 				[如果您的浏览器没有自动跳转,请点击这里 ]</a><br />";
 	}	

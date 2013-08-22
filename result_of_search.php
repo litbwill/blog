@@ -9,16 +9,20 @@
 	echo "<hr><b>分类：&nbsp;&nbsp</b>";
 	while($cat=mysql_fetch_assoc($result))
 	{
-		echo "<a href='view_cat.php?tid=".$cat['tid']."'>".$cat['tname']."</a>&nbsp;&nbsp ";	
+		echo "<a href='view_cat.php?id=".$cat['tid']."'>".$cat['tname']."</a>&nbsp;&nbsp ";	
 	}
 	echo "<hr>";
 	
 	echo "<table bgcolor='#999' style='width:100%'>";
 	echo "<tr>";
 	echo "<td>";
-	echo "最近更新<br/>";
+	echo "搜索结果<br/>";
+	if(isset($_GET['userName'])==true)
+	{
+			$cat_user_name=$_GET['userName'];
+	}	
 	$sql="select a.*, t.*, u.*, uar.reprint_time from article a, tag t, user u, article_tag_relation atr, user_article_relation uar 
-		where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid 
+		where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid and u.uname like '%".$cat_user_name."%'
 		order by uar.reprint_time desc limit 8";
 	$result=mysql_query($sql);
 	echo "<table>";

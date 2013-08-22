@@ -1,4 +1,5 @@
 <?php
+    ob_start();
 	include "Conn/conn.php";
 	session_start();
 ?>

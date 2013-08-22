@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	require "Conn/config.php";
+	require "Conn/conn.php";
 	if(isset($_SESSION['USERNAME']) == TRUE)
 	{
 		echo "当前用户:".$_SESSION['USERNAME']."     [<a href='logout.php'>注销</a>]";

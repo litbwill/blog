@@ -1,4 +1,5 @@
 <?php
+    ob_start();
 	require "Conn/config.php";
 	
 	if(isset($_GET['id'])==true)

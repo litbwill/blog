@@ -1,4 +1,5 @@
 <?php 
+    ob_start();
 	if ($_POST['submit']=="提交")
 	{
 		if($_SESSION['USERNAME']=='')

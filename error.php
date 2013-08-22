@@ -1,4 +1,5 @@
 <?php
+    ob_start();
 	require "header.php";
 	require "session.php";
 	switch($_GET['error'])

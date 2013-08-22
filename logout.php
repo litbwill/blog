@@ -1,4 +1,5 @@
 <?php
+    ob_start();
 	session_start();
 	//require "session.php";
 	session_destroy();//销毁会话

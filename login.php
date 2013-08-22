@@ -1,4 +1,5 @@
 <?php
+    ob_start();
 	session_start();
 	require "Conn/conn.php";
 	if($_POST['submit']=='Login')

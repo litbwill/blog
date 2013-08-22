@@ -1,4 +1,5 @@
 <?php
+    ob_start();
 	require "Conn/conn.php";
 	require "header.php"; 
 	require "session.php";

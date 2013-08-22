@@ -21,17 +21,23 @@
 	
 	//显示标题，作者，时间
 	$sql="select a.*, t.*, u.*, uar.reprint_time, uar.reprinted from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid and t.tid=".$_GET['tid'];
+	if( $_GET['user']="use" ){
+          $sql="select a.*, t.*, u.*, uar.reprint_time, uar.reprinted from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid and t.tid=".$_GET['tid']." and u.uname='".$_SESSION['USERNAME']."'";
+	}
 	//需要改的接口
 	$result=mysql_query($sql);
 	echo "<table>";
-	while ($row=mysql_fetch_assoc($result))
-	{
+	if( $result ){
+	 while ($row=mysql_fetch_assoc($result))
+	  {
 		echo "<tr>";
 		echo "<td><a href='view_entries.php?id=".$row['aid']."'>".$row['title']."</a></td>";//需要修改的地方
 		echo "<td>".'author:'.$row['uname']."</td> ";
 		echo "<td>".'----'.$row['create_time']."</td>";		
 		echo "</tr>";
+	  }
 	}
+	
 	echo "</table>";
 	echo "</td>";		
 	

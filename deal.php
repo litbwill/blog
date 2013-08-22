@@ -24,6 +24,9 @@
 		case 7:
 			echo "<meta http-equiv=refresh content='1;url=index.php'>";	
 			break;
+		case 8:
+			echo "<meta http-equiv=refresh content='1;url=my_space.php'>";	
+			break;
 	}
 	
 ?>

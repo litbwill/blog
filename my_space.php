@@ -16,7 +16,7 @@
   
 </style> 
 
-<?php>
+<?php
     /**
      * 分类
      */
@@ -25,7 +25,7 @@
 	echo "<hr>";
 	while($cat=mysql_fetch_assoc($result))
 	{
-		echo "<a href='view_cat.php?tid=".$cat['tid']."'>".$cat['tname']."</a>     ||    ";	
+		echo "<a href='view_cat.php?tid=".$cat['tid']."&user=use'>".$cat['tname']."</a>     ||    ";	
 	}
 	echo "<hr>";
 ?>
@@ -52,7 +52,7 @@
       <td width="100px"></td>
     </tr>
 	<?php 
-	$sql="select a.aid id,a.title title,a.create_time time,b.tname tag from article a,tag b,article_tag_relation c where c.aid=a.aid and c.tid=b.tid";//  where user=".$_SESSION['USERID']." order by dateposted DESC";	
+	$sql="select a.*, t.*, u.*, uar.reprint_time, uar.reprinted from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid and u.uid=".$_SESSION['USERID'];
 	$result=mysql_query($sql);
 	$num_row_entries=mysql_num_rows($result);
 	?>

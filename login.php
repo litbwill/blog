@@ -9,16 +9,13 @@
 		$numrows=mysql_num_rows($result);
 		if($numrows==1)
 		{
-			$row=mysql_fetch_assoc($result);
-			session_register("USERNAME");
-			session_register("USERID");	
-			
-			$_SESSION['USERNAME']=$row['username'];
-			$_SESSION['USERID']=$row['id'];
-			header("Location:".$config_basedir."deal.php?deal=4"); //到 deal.php 中进行处理 处理号 4  登陆成功
+			$row=mysql_fetch_assoc($result);			
+			$_SESSION['USERNAME']=$row['uname'];
+			$_SESSION['USERID']=$row['uid'];
+			header("Location:deal.php?deal=4"); //到 deal.php 中进行处理 处理号 4  登陆成功
 		}
 		else
-			header("Location:".$config_basedir."/login.php?error=1");
+			header("Location:login.php?error=1");
 	}
 	else
 	{

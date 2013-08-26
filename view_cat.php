@@ -21,8 +21,8 @@
 	
 	//显示标题，作者，时间
 	$sql="select a.*, t.*, u.*, uar.reprint_time, uar.reprinted from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid and t.tid=".$_GET['tid'];
-	if( $_GET['user']="use" ){
-          $sql="select a.*, t.*, u.*, uar.reprint_time, uar.reprinted from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid and t.tid=".$_GET['tid']." and u.uname='".$_SESSION['USERNAME']."'";
+	if( isset($_GET['user']) && isset($_SESSION['USERID'])){
+    $sql="select a.*, t.*, u.*, uar.reprint_time, uar.reprinted from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid and t.tid=".$_GET['tid']." and u.uid='".$_SESSION['USERID']."'";
 	}
 	//需要改的接口
 	$result=mysql_query($sql);

@@ -12,19 +12,17 @@
 		{
 			$time=date('Y-m-d H:i:s',time());
 			$sql="insert into article (content,title,create_time)
-				values('".$_POST['content']."','".$_POST['title']."',".$time.")";
+				values('".$_POST['content']."','".$_POST['title']."','".$time."')";
             @mysql_query($sql);
-
-            $sql1="select aid from article where create_time=".$time;
+            $sql1="select aid from article where create_time='".$time."'";
             $result=@mysql_query($sql1);
-            echo $sql1;
             $id=mysql_fetch_assoc($result);
             $aid=$id['aid'];
             $sql2="insert into article_tag_relation (aid,tid)
-				values(".intval($aid).",".intval($_POST['tid']).")";
-			@mysql_query($sql2);
+				    values(".intval($aid).",".intval($_POST['tid']).")";
+			      @mysql_query($sql2);
             $reprinted=1;
-			$sql3="insert into user_article_relation (uid,aid,reprinted,reprint_time) values(".$_SESSION['USERID'].",".$aid.",".$reprinted.",now())";
+			      $sql3="insert into user_article_relation (uid,aid,reprinted,reprint_time) values(".$_SESSION['USERID'].",".$aid.",".$reprinted.",now())";
 			@mysql_query($sql3);
 			if(mysql_error())
 			{

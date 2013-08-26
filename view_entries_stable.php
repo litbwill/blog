@@ -20,27 +20,11 @@
 	require "header.php";
 	require "session.php";
 ?>
-<script type="text/javascript">
-
-function check() {
-	   <!--
-		var login_name = '<?php echo $_SESSION['USERNAME'] ?>';
-		var art_name = '<?php echo $row[uname] ?>';
-		-->
-		if( login_name == art_name ) {
-			//document.getElementById("edit").type="hidden";
-			document.getElementById("sub").type="submit";
-			document.getElementById("text1").readOnly=false;
-		}else{
-	         alert('无此权限');
-		}
-	}
-</script>
 <?php
   /**
    * 提交修改
    */
-  if (isset($_POST['submit']) && $_POST['submit']=="提交")
+  if ($_POST['submit']=="提交")
 	{
 		if($_SESSION['USERNAME']=='')
 			$user=0;
@@ -70,20 +54,17 @@ function check() {
 		$sql="select a.*, t.*, u.*, uar.reprint_time from article a, tag t, user u, article_tag_relation atr, user_article_relation uar where  a.aid=".$entries_id." and a.aid = atr.aid and t.tid = atr.tid and u.uid = uar.uid and a.aid = uar.aid ;";	
 	$result=mysql_query($sql);
 	$row=mysql_fetch_assoc($result);
-	if(isset($_SESSION['USERNAME'])){	
-		$c_user=($_SESSION['USERNAME'])?$_SESSION['USERNAME']:$str;
-	}
+	$c_user=($_SESSION['USERNAME'])?$_SESSION['USERNAME']:$str;
 	echo "<hr/>";
-	echo "<b style='padding-left:20px;'>当前位置: ".$row['tname']."</b>->".$row['title']."<hr/>";
-?>
+	echo "<b>当前位置: ".$row['tname']."</b>---->".$row['title']."<hr/>";
+	?>
 <form action="" method="post">
-	<table style="border:none; padding-left:30px; width:100%;">
+	<table>
 		<?php
-		echo "<tr><td colspan=2>文章名称: <b>".$row['title']."</b></td></tr>";
-		echo "<tr><td colspan=2>属于分类：<a href='view_cat.php?tid=".$row['tid']."'>".$row['tname']."</a> - 发布时间：".date("D jS F Y g.iA",strtotime($row['reprint_time']))."</td></tr>";
-		//echo "<tr><td>内容:</td></tr>";
+		echo "<tr><td>Title :</td><td>".$row['title']."</tr>";
+		echo "<tr><td>内容:</td><td>";
 		?>
-		<tr><td colspan=2><textarea id="text1" rows="10" cols="50" name="content" style="width:100%;background-color:#AAA;border:none;" readonly><?php echo $row['content']?></textarea></td></tr>
+		<textarea id="text1" rows="10" cols="50" name="content" readonly><?php echo $row['content']?></textarea></td></tr>
 		<tr>
 			<td><input id="edit" type="button" value="编辑" onclick="check()"></td>
 			<td><input id="sub" name="submit" type="hidden"  value="提交" ></td>
@@ -91,11 +72,25 @@ function check() {
 		</tr>
 	</table>
 </form>
-
-<?php 
-	//require "add_comment.php"; //添加评论 
+	<?php
+	echo "<i>In <a href='view_cat.php?id=".$row['tid']."'>".$row['tname']."</a> - Posted on ".date("D jS F Y g.iA",strtotime($row['reprint_time']))."</i><hr/><hr/>";
 ?>
 
+<script type="text/javascript">
+	
+function check() {
+   <!--
+	var login_name = '<?php echo $_SESSION['USERNAME'] ?>';
+	var art_name = '<?php echo $row[uname] ?>';
+	-->
+		if( login_name == art_name){
+			document.getElementById("sub").type="submit";
+			document.getElementById("text1").readOnly=false;
+		}else{
+             alert('无此权限');
+		}
+	}
+</script>
 <?php
 	require "footer.php";
 ?>

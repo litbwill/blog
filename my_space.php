@@ -61,7 +61,7 @@
 		{
 			echo "<tr>";
 				echo "<td><a href='view_entries.php?id=".$row['aid']."'>".$row['title']."</a></td>";
-				echo "<td>分类: ".$row['tag']." - 发表日期： ".$row['time']."</i></td>";	
+				echo "<td>分类: ".$row['tname']." - 发表日期： ".$row['reprint_time']."</i></td>";	
 			echo "</tr>";	
 		}
 	?> 
